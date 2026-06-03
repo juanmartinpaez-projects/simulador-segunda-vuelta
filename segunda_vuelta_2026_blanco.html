@@ -1,0 +1,856 @@
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@400;500;600&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  .sv-root {
+    background: #ffffff;
+    color: #111;
+    font-family: 'Barlow', sans-serif;
+    min-height: 100vh;
+    padding: 0 0 48px;
+  }
+
+  .sv-header {
+    background: #f5f5f5;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 10px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .sv-header-label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: #888;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .sv-header-label::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #c0392b;
+  }
+
+  .sv-header-brand {
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: #aaa;
+    text-transform: uppercase;
+  }
+
+.sv-crop-logo { height: 28px; width: auto; object-fit: contain; }
+
+  .sv-hero {
+    padding: 28px 24px 20px;
+    border-bottom: 1px solid #ebebeb;
+    margin-bottom: 24px;
+  }
+
+  .sv-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 48px;
+    font-weight: 900;
+    line-height: 0.95;
+    text-transform: uppercase;
+    letter-spacing: -1px;
+    color: #111;
+    margin-bottom: 14px;
+  }
+
+  .sv-subtitle {
+    font-size: 13px;
+    color: #888;
+    line-height: 1.5;
+    max-width: 460px;
+    margin-bottom: 20px;
+  }
+
+  .sv-subtitle strong { color: #444; font-weight: 600; }
+
+  .btn-reset {
+    background: transparent;
+    border: 1px solid #ddd;
+    color: #666;
+    font-family: 'Barlow', sans-serif;
+    font-size: 12px;
+    padding: 7px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .btn-reset:hover { border-color: #999; color: #111; }
+
+  .sv-projection-card {
+    margin: 0 24px 24px;
+    background: #f7f7f7;
+    border: 1px solid #e8e8e8;
+    border-radius: 14px;
+    padding: 20px 24px;
+  }
+
+  .sv-proj-label {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    color: #aaa;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .sv-proj-label span.winner-name { font-weight: 700; }
+  .sv-proj-label span.winner-a { color: #1a3a6b; }
+  .sv-proj-label span.winner-c { color: #8b1a1a; }
+
+  .sv-candidates {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 16px;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .sv-candidate {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 8px;
+  }
+
+  .sv-candidate-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 3px solid #ddd;
+    background: #eee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px;
+    font-weight: 900;
+    color: #999;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .sv-candidate-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+  }
+
+  .sv-candidate.abelardo .sv-candidate-avatar { border-color: #1a3a6b; }
+  .sv-candidate.cepeda .sv-candidate-avatar { border-color: #8b1a1a; }
+
+  .sv-candidate-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #111;
+    line-height: 1.2;
+  }
+
+  .sv-candidate-party {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #aaa;
+  }
+
+  .sv-candidate-pct {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 58px;
+    font-weight: 900;
+    line-height: 1;
+  }
+
+  .sv-candidate.abelardo .sv-candidate-pct { color: #1a3a6b; }
+  .sv-candidate.cepeda .sv-candidate-pct { color: #8b1a1a; }
+
+  .sv-candidate-votes {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+  }
+
+  .sv-candidate-base {
+    font-size: 12px;
+    color: #aaa;
+  }
+
+  .sv-vs {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #ccc;
+    letter-spacing: 2px;
+  }
+
+  .sv-winner-badge {
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-weight: 600;
+  }
+
+  .sv-winner-badge.abelardo { background: rgba(26,58,107,0.1); color: #1a3a6b; }
+  .sv-winner-badge.cepeda { background: rgba(139,26,26,0.1); color: #8b1a1a; }
+
+  .sv-bar-container {
+    display: flex;
+    height: 32px;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 10px;
+    position: relative;
+    background: #eee;
+  }
+
+  .sv-bar-a { background: #1a3a6b; transition: width 0.4s ease; }
+  .sv-bar-b { background: #ccc; transition: width 0.4s ease; }
+  .sv-bar-c { background: #8b1a1a; transition: width 0.4s ease; }
+
+  .sv-bar-50 {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: rgba(255,255,255,0.6);
+    transform: translateX(-50%);
+  }
+
+  .sv-bar-legend {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #999;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .sv-bar-legend .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 5px;
+    vertical-align: middle;
+  }
+
+  .sv-section-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 26px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #111;
+    margin-bottom: 4px;
+  }
+
+  .sv-section-sub {
+    font-size: 12px;
+    color: #aaa;
+    margin-bottom: 20px;
+    line-height: 1.4;
+  }
+
+  .sv-candidates-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 12px;
+    padding: 0 24px;
+    margin-bottom: 24px;
+  }
+
+  .sv-elim-card {
+    background: #f4f4f4;
+    border: 1px solid #e8e8e8;
+    border-radius: 12px;
+    padding: 14px 16px;
+  }
+
+  .sv-elim-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .sv-elim-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #e0e0e0;
+    border: 2px solid #d0d0d0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #888;
+    flex-shrink: 0;
+  }
+
+  .sv-elim-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #222;
+    line-height: 1.2;
+  }
+
+  .sv-elim-votes-info {
+    font-size: 11px;
+    color: #aaa;
+    margin-top: 1px;
+  }
+
+  .sv-slider-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+
+  .sv-slider-group { display: flex; flex-direction: column; gap: 5px; }
+
+  .sv-slider-label {
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+
+  .sv-slider-label.a-label { color: #1a3a6b; }
+  .sv-slider-label.b-label { color: #999; }
+  .sv-slider-label.c-label { color: #8b1a1a; }
+
+  .sv-slider-val-row {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .sv-pct-input {
+    width: 44px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    color: #111;
+    font-family: 'Barlow', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 4px 6px;
+    text-align: center;
+  }
+
+  .sv-pct-sign {
+    font-size: 12px;
+    color: #bbb;
+  }
+
+  .sv-elim-mini-bar {
+    height: 5px;
+    border-radius: 3px;
+    display: flex;
+    overflow: hidden;
+    gap: 1px;
+    margin-top: 8px;
+    background: #e0e0e0;
+  }
+
+  .sv-mini-a { background: #1a3a6b; height: 100%; transition: width 0.3s; }
+  .sv-mini-b { background: #ccc; height: 100%; transition: width 0.3s; }
+  .sv-mini-c { background: #8b1a1a; height: 100%; transition: width 0.3s; }
+
+  .sv-elim-result {
+    font-size: 11px;
+    color: #bbb;
+    margin-top: 8px;
+    line-height: 1.5;
+  }
+
+  .sv-elim-result span { color: #888; font-weight: 500; }
+
+  .sv-nuevos-section {
+    margin: 0 24px 24px;
+    background: #f4f4f4;
+    border: 1px solid #e8e8e8;
+    border-radius: 12px;
+    padding: 16px 20px;
+  }
+
+  .sv-nuevos-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+
+  .sv-nuevos-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .sv-plus-circle {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1.5px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: #aaa;
+  }
+
+  .sv-nuevos-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #222;
+  }
+
+  .sv-nuevos-sub {
+    font-size: 11px;
+    color: #aaa;
+    margin-top: 1px;
+  }
+
+  .sv-badge-nuevo {
+    background: rgba(26,58,107,0.1);
+    color: #1a3a6b;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 20px;
+  }
+
+  .sv-nuevos-controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    align-items: start;
+  }
+
+  .sv-count-input {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    color: #111;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    padding: 10px 16px;
+    width: 100%;
+    margin-bottom: 8px;
+  }
+
+  .sv-quick-btns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .sv-quick-btn {
+    background: #fff;
+    border: 1px solid #ddd;
+    color: #666;
+    font-family: 'Barlow', sans-serif;
+    font-size: 11px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .sv-quick-btn:hover { border-color: #999; color: #111; }
+
+  .sv-model-note {
+    margin: 0 24px;
+    padding: 16px 20px;
+    background: #fafafa;
+    border: 1px solid #ebebeb;
+    border-radius: 10px;
+    font-size: 11px;
+    color: #bbb;
+    line-height: 1.6;
+  }
+
+  .sv-model-note strong { color: #999; font-weight: 600; }
+
+  .sv-section-pad { padding: 0 24px; margin-bottom: 10px; }
+
+  input[type=range] {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 4px;
+    background: #ddd;
+    border-radius: 2px;
+    outline: none;
+  }
+  input[type=range].a-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: #1a3a6b;
+    cursor: pointer;
+  }
+  input[type=range].c-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: #8b1a1a;
+    cursor: pointer;
+  }
+  input[type=range].b-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: #aaa;
+    cursor: pointer;
+  }
+</style>
+
+<div class="sv-root">
+  <div class="sv-header">
+    <div class="sv-header-label">Elecciones presidenciales · Colombia</div>
+    <img class="sv-crop-logo" src="CROP.png" alt="CROP Asuntos Públicos">
+  </div>
+
+  <div class="sv-hero">
+    <div class="sv-title">Proyección de la<br>Segunda Vuelta 2026</div>
+    <div class="sv-subtitle">
+      Reparte los votos de cada candidato eliminado entre <strong>Abelardo de la Espriella</strong>, voto en blanco e <strong>Iván Cepeda</strong>. La proyección se recalcula en vivo.
+      Primera vuelta: <strong>31 de mayo de 2026</strong>.
+    </div>
+    <button class="btn-reset" onclick="resetAll()">↺ Reiniciar</button>
+  </div>
+
+  <div class="sv-projection-card">
+    <div class="sv-proj-label">
+      Proyección 2ª vuelta · <span id="winner-label">Calculando...</span>
+    </div>
+    <div class="sv-candidates">
+      <div class="sv-candidate abelardo">
+        <div class="sv-candidate-avatar">
+          <img src="Abelardo.jpg"
+               alt="Abelardo de la Espriella"
+               onerror="this.style.display='none';this.parentElement.innerHTML='AE'">
+        </div>
+        <div>
+          <div class="sv-candidate-name">Abelardo de la Espriella</div>
+          <div class="sv-candidate-party">Defensores de la Patria</div>
+        </div>
+        <div class="sv-winner-badge abelardo" id="badge-a" style="display:none">Líder</div>
+        <div class="sv-candidate-pct" id="pct-a">—</div>
+        <div class="sv-candidate-votes" id="votes-a">—</div>
+        <div class="sv-candidate-base" id="base-a">Base 10.361.499</div>
+      </div>
+
+      <div class="sv-vs">vs</div>
+
+      <div class="sv-candidate cepeda">
+        <div class="sv-candidate-avatar">
+          <img src="Cepeda.jpg"
+               alt="Iván Cepeda Castro"
+               onerror="this.style.display='none';this.parentElement.innerHTML='IC'">
+        </div>
+        <div>
+          <div class="sv-candidate-name">Iván Cepeda Castro</div>
+          <div class="sv-candidate-party">Pacto Histórico</div>
+        </div>
+        <div class="sv-winner-badge cepeda" id="badge-c" style="display:none">Líder</div>
+        <div class="sv-candidate-pct" id="pct-c">—</div>
+        <div class="sv-candidate-votes" id="votes-c">—</div>
+        <div class="sv-candidate-base" id="base-c">Base 9.688.361</div>
+      </div>
+    </div>
+
+    <div class="sv-bar-container">
+      <div class="sv-bar-a" id="bar-a" style="width:50%"></div>
+      <div class="sv-bar-b" id="bar-b" style="width:0%"></div>
+      <div class="sv-bar-c" id="bar-c" style="width:50%"></div>
+      <div class="sv-bar-50"></div>
+    </div>
+
+    <div class="sv-bar-legend">
+      <span><span class="dot" style="background:#1a3a6b"></span><span id="leg-a">—</span></span>
+      <span><span class="dot" style="background:#ccc"></span><span id="leg-b">—</span></span>
+      <span><span class="dot" style="background:#8b1a1a"></span><span id="leg-c">—</span></span>
+    </div>
+  </div>
+
+  <div class="sv-section-pad">
+    <div class="sv-section-title">¿A dónde van los votos?</div>
+    <div class="sv-section-sub" id="total-juego">6 candidatos · cargando...</div>
+  </div>
+
+  <div class="sv-candidates-grid" id="cards-grid"></div>
+
+  <div class="sv-nuevos-section">
+    <div class="sv-nuevos-header">
+      <div class="sv-nuevos-title">
+        <div class="sv-plus-circle">+</div>
+        <div>
+          <div class="sv-nuevos-name">Votos nuevos</div>
+          <div class="sv-nuevos-sub">Personas que no votaron en 1ª vuelta y ahora sí salen a las urnas</div>
+        </div>
+      </div>
+      <div class="sv-badge-nuevo">Nuevo</div>
+    </div>
+    <div class="sv-nuevos-controls">
+      <div>
+        <input type="number" class="sv-count-input" id="nuevos-count" value="0" min="0" oninput="recalc()">
+        <div class="sv-quick-btns">
+          <button class="sv-quick-btn" onclick="setNuevos(500000)">500 mil</button>
+          <button class="sv-quick-btn" onclick="setNuevos(1000000)">1 millón</button>
+          <button class="sv-quick-btn" onclick="setNuevos(2000000)">2 millones</button>
+          <button class="sv-quick-btn" onclick="setNuevos(5000000)">5 millones</button>
+          <button class="sv-quick-btn" onclick="setNuevos(0)">Limpiar</button>
+        </div>
+      </div>
+      <div id="nuevos-sliders"></div>
+    </div>
+  </div>
+
+  <div class="sv-model-note">
+    <strong>Modelo:</strong> cada finalista conserva el 100% de sus votos de primera vuelta y se le suman los votos transferidos de los candidatos eliminados y los <strong>votos nuevos</strong>, según el reparto que definas. El voto en blanco acumula la fracción no asignada. <strong>Herramienta de simulación — no es un pronóstico oficial.</strong> Datos de primera vuelta: 31 de mayo de 2026.
+  </div>
+</div>
+
+<script>
+const BASE_A = 10361499;
+const BASE_C = 9688361;
+
+const eliminated = [
+  { id: 'paloma',  name: 'Paloma Valencia Laserna',        initials: 'PV', votes: 1639685, pct: 6.9 },
+  { id: 'fajardo', name: 'Sergio Fajardo Valderrama',      initials: 'SF', votes: 1009073, pct: 4.3 },
+  { id: 'claudia', name: 'Claudia López',                  initials: 'CL', votes: 225517,  pct: 1.0 },
+  { id: 'botero',  name: 'Raúl Santiago Botero Jaramillo', initials: 'RB', votes: 206140,  pct: 0.9 },
+  { id: 'lizcano', name: 'Óscar Mauricio Lizcano Arango',  initials: 'OL', votes: 53839,   pct: 0.2 },
+  { id: 'uribe',   name: 'Miguel Uribe Londoño',           initials: 'MU', votes: 28657,   pct: 0.1 },
+];
+
+const state = {};
+eliminated.forEach(c => { state[c.id] = { a: 45, b: 10, c: 45 }; });
+state.nuevos = { a: 45, b: 10, c: 45 };
+
+function fmt(n) { return Math.round(n).toLocaleString('es-CO'); }
+function fmtPct(n) { return n.toFixed(1) + '%'; }
+function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+
+function syncSliders(id, changed, val) {
+  const s = state[id];
+  val = clamp(parseInt(val) || 0, 0, 100);
+  s[changed] = val;
+  const others = ['a','b','c'].filter(k => k !== changed);
+  const remaining = 100 - val;
+  const sumOthers = s[others[0]] + s[others[1]];
+  if (sumOthers === 0) {
+    s[others[0]] = Math.floor(remaining / 2);
+    s[others[1]] = remaining - s[others[0]];
+  } else {
+    const r0 = s[others[0]] / sumOthers;
+    s[others[0]] = Math.round(r0 * remaining);
+    s[others[1]] = remaining - s[others[0]];
+  }
+  s.a = clamp(s.a, 0, 100);
+  s.b = clamp(s.b, 0, 100);
+  s.c = clamp(s.c, 0, 100);
+  updateCard(id);
+  recalc();
+}
+
+function updateCard(id) {
+  const s = state[id];
+  const isN = id === 'nuevos';
+  const px = isN ? 'n' : id;
+  ['a','b','c'].forEach(k => {
+    const inp = document.getElementById(`inp-${px}-${k}`);
+    const rng = document.getElementById(`rng-${px}-${k}`);
+    if (inp) inp.value = s[k];
+    if (rng) rng.value = s[k];
+  });
+  const totalV = isN ? (parseInt(document.getElementById('nuevos-count')?.value)||0) : (eliminated.find(e=>e.id===id)?.votes||0);
+  const va = Math.round(totalV * s.a / 100);
+  const vb = Math.round(totalV * s.b / 100);
+  const vc = totalV - va - vb;
+  ['a','b','c'].forEach(k => {
+    const m = document.getElementById(`mini-${k}-${px}`);
+    if (m) m.style.width = s[k] + '%';
+  });
+  const res = document.getElementById(`result-${px}`);
+  if (res && !isN) {
+    res.innerHTML = `<span>${fmt(va)}</span> → Abelardo · <span>${fmt(vb)}</span> en blanco · <span>${fmt(vc)}</span> → Cepeda`;
+  }
+}
+
+function recalc() {
+  let tA = BASE_A, tC = BASE_C, tB = 0;
+  eliminated.forEach(c => {
+    const s = state[c.id];
+    const va = Math.round(c.votes * s.a / 100);
+    const vb = Math.round(c.votes * s.b / 100);
+    tA += va; tB += vb; tC += (c.votes - va - vb);
+  });
+  const nv = parseInt(document.getElementById('nuevos-count')?.value)||0;
+  if (nv > 0) {
+    const sn = state.nuevos;
+    const nva = Math.round(nv * sn.a / 100);
+    const nvb = Math.round(nv * sn.b / 100);
+    tA += nva; tB += nvb; tC += (nv - nva - nvb);
+  }
+  const grand = tA + tB + tC;
+  const pA = (tA/grand)*100, pC = (tC/grand)*100, pB = (tB/grand)*100;
+
+  document.getElementById('pct-a').textContent = fmtPct(pA);
+  document.getElementById('pct-c').textContent = fmtPct(pC);
+  document.getElementById('votes-a').textContent = fmt(tA);
+  document.getElementById('votes-c').textContent = fmt(tC);
+  document.getElementById('base-a').textContent = `Base ${fmt(BASE_A)} · sumados +${fmt(tA-BASE_A)}`;
+  document.getElementById('base-c').textContent = `Base ${fmt(BASE_C)} · sumados +${fmt(tC-BASE_C)}`;
+  document.getElementById('bar-a').style.width = pA + '%';
+  document.getElementById('bar-b').style.width = pB + '%';
+  document.getElementById('bar-c').style.width = pC + '%';
+  document.getElementById('leg-a').textContent = `Abelardo · ${fmt(tA)} · ${fmtPct(pA)}`;
+  document.getElementById('leg-b').textContent = `Voto en blanco · ${fmt(tB)} · ${fmtPct(pB)}`;
+  document.getElementById('leg-c').textContent = `Cepeda · ${fmt(tC)} · ${fmtPct(pC)}`;
+
+  const bA = document.getElementById('badge-a');
+  const bC = document.getElementById('badge-c');
+  bA.style.display = 'none'; bC.style.display = 'none';
+
+  if (Math.abs(pA - pC) < 0.05) {
+    document.getElementById('winner-label').textContent = 'Empate técnico';
+  } else if (pA > pC) {
+    const diff = pA - pC;
+    document.getElementById('winner-label').innerHTML = `<span class="winner-name winner-a">Abelardo de la Espriella</span> · ${fmtPct(diff)} de ventaja · +${fmt(tA-tC)} votos`;
+    bA.style.display = 'inline-block';
+  } else {
+    const diff = pC - pA;
+    document.getElementById('winner-label').innerHTML = `<span class="winner-name winner-c">Iván Cepeda Castro</span> · ${fmtPct(diff)} de ventaja · +${fmt(tC-tA)} votos`;
+    bC.style.display = 'inline-block';
+  }
+
+  const totalJ = eliminated.reduce((s,c)=>s+c.votes,0) + nv;
+  document.getElementById('total-juego').textContent = `${eliminated.length} candidatos · ${fmt(totalJ)} votos en juego`;
+}
+
+function buildCards() {
+  const grid = document.getElementById('cards-grid');
+  grid.innerHTML = '';
+  eliminated.forEach(c => {
+    const s = state[c.id];
+    const card = document.createElement('div');
+    card.className = 'sv-elim-card';
+    card.innerHTML = `
+      <div class="sv-elim-header">
+        <div class="sv-elim-avatar">${c.initials}</div>
+        <div>
+          <div class="sv-elim-name">${c.name}</div>
+          <div class="sv-elim-votes-info">${fmt(c.votes)} votos · ${c.pct}%</div>
+        </div>
+      </div>
+      <div class="sv-slider-row">
+        <div class="sv-slider-group">
+          <div class="sv-slider-label a-label">Abelardo</div>
+          <div class="sv-slider-val-row">
+            <input type="number" class="sv-pct-input" id="inp-${c.id}-a" value="${s.a}" min="0" max="100" oninput="syncSliders('${c.id}','a',this.value)">
+            <span class="sv-pct-sign">%</span>
+          </div>
+          <input type="range" class="a-range" min="0" max="100" value="${s.a}" id="rng-${c.id}-a" oninput="syncSliders('${c.id}','a',this.value)">
+        </div>
+        <div class="sv-slider-group">
+          <div class="sv-slider-label b-label">Blanco</div>
+          <div class="sv-slider-val-row">
+            <input type="number" class="sv-pct-input" id="inp-${c.id}-b" value="${s.b}" min="0" max="100" oninput="syncSliders('${c.id}','b',this.value)">
+            <span class="sv-pct-sign">%</span>
+          </div>
+          <input type="range" class="b-range" min="0" max="100" value="${s.b}" id="rng-${c.id}-b" oninput="syncSliders('${c.id}','b',this.value)">
+        </div>
+        <div class="sv-slider-group">
+          <div class="sv-slider-label c-label">Cepeda</div>
+          <div class="sv-slider-val-row">
+            <input type="number" class="sv-pct-input" id="inp-${c.id}-c" value="${s.c}" min="0" max="100" oninput="syncSliders('${c.id}','c',this.value)">
+            <span class="sv-pct-sign">%</span>
+          </div>
+          <input type="range" class="c-range" min="0" max="100" value="${s.c}" id="rng-${c.id}-c" oninput="syncSliders('${c.id}','c',this.value)">
+        </div>
+      </div>
+      <div class="sv-elim-mini-bar">
+        <div class="sv-mini-a" id="mini-a-${c.id}" style="width:${s.a}%"></div>
+        <div class="sv-mini-b" id="mini-b-${c.id}" style="width:${s.b}%"></div>
+        <div class="sv-mini-c" id="mini-c-${c.id}" style="width:${s.c}%"></div>
+      </div>
+      <div class="sv-elim-result" id="result-${c.id}">—</div>
+    `;
+    grid.appendChild(card);
+    updateCard(c.id);
+  });
+
+  const sn = state.nuevos;
+  document.getElementById('nuevos-sliders').innerHTML = `
+    <div class="sv-slider-row">
+      <div class="sv-slider-group">
+        <div class="sv-slider-label a-label">Abelardo</div>
+        <div class="sv-slider-val-row">
+          <input type="number" class="sv-pct-input" id="inp-n-a" value="${sn.a}" min="0" max="100" oninput="syncSliders('nuevos','a',this.value)">
+          <span class="sv-pct-sign">%</span>
+        </div>
+        <input type="range" class="a-range" min="0" max="100" value="${sn.a}" id="rng-n-a" oninput="syncSliders('nuevos','a',this.value)">
+      </div>
+      <div class="sv-slider-group">
+        <div class="sv-slider-label b-label">Blanco</div>
+        <div class="sv-slider-val-row">
+          <input type="number" class="sv-pct-input" id="inp-n-b" value="${sn.b}" min="0" max="100" oninput="syncSliders('nuevos','b',this.value)">
+          <span class="sv-pct-sign">%</span>
+        </div>
+        <input type="range" class="b-range" min="0" max="100" value="${sn.b}" id="rng-n-b" oninput="syncSliders('nuevos','b',this.value)">
+      </div>
+      <div class="sv-slider-group">
+        <div class="sv-slider-label c-label">Cepeda</div>
+        <div class="sv-slider-val-row">
+          <input type="number" class="sv-pct-input" id="inp-n-c" value="${sn.c}" min="0" max="100" oninput="syncSliders('nuevos','c',this.value)">
+          <span class="sv-pct-sign">%</span>
+        </div>
+        <input type="range" class="c-range" min="0" max="100" value="${sn.c}" id="rng-n-c" oninput="syncSliders('nuevos','c',this.value)">
+      </div>
+    </div>
+    <div style="font-size:11px;color:#bbb;margin-top:6px">Sin votos nuevos todavía. Escribe una cantidad o usa un atajo.</div>
+  `;
+}
+
+function setNuevos(n) {
+  document.getElementById('nuevos-count').value = n;
+  recalc();
+}
+
+function resetAll() {
+  eliminated.forEach(c => { state[c.id] = { a: 45, b: 10, c: 45 }; });
+  state.nuevos = { a: 45, b: 10, c: 45 };
+  document.getElementById('nuevos-count').value = 0;
+  buildCards();
+  recalc();
+}
+
+buildCards();
+recalc();
+</script>
